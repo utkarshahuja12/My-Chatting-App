@@ -1,0 +1,35 @@
+{%load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}Let's Chat{% endblock %}</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<header>
+	<h1 align="center" >Let's Chat</h1>
+	{% if sender.is_authenticated %}
+	  <a href="{%url 'logout' %}"><p align="right"><u>Logout</u></p></a>
+	{%else %}
+	 <h6 align="right"><u> <a href="{%url 'login' %} " >Login</a></u> &nbsp;<u>  <a href="{% url 'signup' %}">Sign Up</a></u></h6>
+	{% endif %}
+</header>
+<h3 align="left">Welcome, {{sender.username}}</h3>
+<br>
+<hr>
+<div class="panel pane-default">
+<h3>Users</h3>
+<ol class="list-group">
+{%for i in users_except%}
+<li><a href="">{{i.username}}</a>
+{%endfor%}
+</ol>
+</div>
+</body>
+</html>
+

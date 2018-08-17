@@ -1,0 +1,27 @@
+
+{% load staticfiles %}
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{% block title %}User Registration{% endblock %}</title>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+	<header>
+		<h1 align="center">Let's Chat</h1>
+		{% if user.is_authenticated %}
+			<a href="{% url 'logout' %}" ><p align="right">Logout</p></a>
+		{% else %}
+			<p align="right"><a href="{% url 'login' %}">Login</a> |||| <a href="{% url 'signup' %}">Sign Up</a></p>
+		{% endif %}
+		<hr>
+	</header>
+	<main>
+		{% block content %}
+		{% endblock %}
+	</main>
+	</body>
+</html>
