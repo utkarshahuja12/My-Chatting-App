@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import SignupForm
-from .models import Dialog
 from .models import Message
+from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from datetime import datetime
 @login_required
@@ -27,5 +27,21 @@ def signup(request):
 		form = SignupForm()
 	return render(request,'signup.html',{'form':form})
 
-
+@login_required
+def message(request):
+	flag=False
+	if request.method == 'POST':
+		receiver_username=request.POST.get('receiver')
+		r=User.objects.get(username=receiver_username)
+		text=request.POST.get('message')
+		sender=request.user
+		Message.objects.create(text=text,sender=sender,receiver=r,read=False)
+		flag=True
+	s = request.user
+	if flag==False:
+		receiver_user_name=request.GET.get('name')
+		r=User.objects.get(username=receiver_user_name)
+	dialog=Message.objects.filter(Q(sender=s)|Q(sender=r))
+	dialog=dialog.filter(Q(receiver=s)|Q(receiver=r)).order_by('created_date')
+	return render(request,'message.html',{'convo':dialog,'sender':s,'receiver':r})
 

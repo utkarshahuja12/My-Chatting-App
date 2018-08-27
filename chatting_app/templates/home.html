@@ -19,14 +19,14 @@
 	 <h6 align="right"><u> <a href="{%url 'login' %} " >Login</a></u> &nbsp;<u>  <a href="{% url 'signup' %}">Sign Up</a></u></h6>
 	{% endif %}
 </header>
-<h3 align="left">Welcome, {{sender.username}}</h3>
+<h3 align="left">Welcome, {{sender.first_name}}</h3>
 <br>
 <hr>
 <div class="panel pane-default">
 <h3>Users</h3>
 <ol class="list-group">
 {%for i in users_except%}
-<li><a href="">{{i.username}}</a>
+<li><a href="{% url 'message' %}?name={{i.username}}" target="new">{{i.first_name}} &nbsp;{{i.last_name}}</a>
 {%endfor%}
 </ol>
 </div>
